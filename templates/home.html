@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <title>Dialy</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <ul class="menu">
+                <li class="item">
+                    <i class="uil uil-user"></i>
+                    <a style="color: #000" href="https:/t.me/alishercpp">Muallif</a>
+                </li>
+                <li class="item share">
+                    <div>
+                        <i class="uil uil-user-plus"></i>
+                        <a style="color: #000" href="https://t.me/alishercpp">Qo'shiling</a>
+                    </div>
+                    <i class="uil uil-angle-right"></i>
+                    <ul class="share-menu">
+                        <li class="item">
+                            <i class="uil uil-telegram"></i>
+                            <a style="color: #000" href="https://t.me/algorithmshub/">Kanal</a>
+                        </li>
+                        <li class="item">
+                            <i class="uil uil-telegram"></i>
+                            <a style="color: #000" href="https:/t.me/algorithmshubteam/">Guruh</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="settings">
+                <li class="item">
+                    <i class="uil uil-setting"></i>
+                    <span>Sozlamalar</span>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div class="middle">
+        <form action="" class="search-box">
+            <input type="text" class="input" name="search" value="{{search}}">
+            <button class="btn" type="button"></button>
+        </form>
+    </div>
+    <div class="lessons">
+        {% for lesson in lessons %}
+            <div class="lesson">
+                <a href="{% url 'lesson' lesson.url %}">{{lesson.name}}</a>
+            </div>
+        {% endfor %}
+        <div class="load">
+            <a href="?load_more=true">Barchasi</a>
+        </div>
+    </div>
+</body>
+<script>
+    const btn = document.querySelector('.btn');
+    const input = document.querySelector('.input');
+
+    btn.addEventListener('click', ()=>{
+        btn.classList.toggle('close');
+        input.classList.toggle('inclicked');
+    })
+
+    const contextMenu = document.querySelector(".wrapper");
+const share_menu = document.querySelector(".share-menu");
+
+document.addEventListener("contextmenu", e => {
+    e.preventDefault();
+    let x = e.offsetX, y = e.offsetY, 
+    winWidth = window.innerWidth, cmWidth = contextMenu.offsetWidth;
+    winHeight = window.innerHeight, cmHeight = contextMenu.offsetHeight;
+
+    if (x > (winWidth - cmWidth - share_menu.offsetWidth)){
+        share_menu.style.left = "-200px";
+    }else{
+        share_menu.style.left = "";
+        share_menu.style.right = "-200px"
+    }
+    x = x > winWidth - cmWidth ? winWidth - cmWidth : x;
+    y = y > winHeight - cmHeight ? winHeight - cmHeight : y;
+    contextMenu.style.left =`${x}px`;
+    contextMenu.style.top = `${y}px`;
+    contextMenu.style.visibility = "visible"
+    contextMenu.style.display = "block"
+})
+document.addEventListener("click", () => contextMenu.style.display = "none")
+</script>
+</html>
